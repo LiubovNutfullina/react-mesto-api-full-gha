@@ -1,0 +1,11 @@
+.profile {
+  display: flex;
+  gap: 30px;
+}
+
+@media screen and (max-width: 984px) {
+  .profile {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}

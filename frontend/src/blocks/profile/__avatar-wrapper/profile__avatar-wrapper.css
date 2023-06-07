@@ -1,0 +1,9 @@
+.profile__avatar-wrapper {
+  border-radius: 50%;
+  margin: 0;
+}
+
+.profile__avatar-wrapper:hover .profile__avatar-button::before {
+  display: grid;
+  place-items: center;
+}

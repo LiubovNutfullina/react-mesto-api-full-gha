@@ -1,0 +1,6 @@
+.header__content {
+  display: flex;
+  margin-bottom: 46px;
+  gap: 24px;
+  align-items: flex-end;
+}

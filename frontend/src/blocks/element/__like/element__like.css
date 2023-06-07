@@ -1,0 +1,12 @@
+.element__like {
+  background: url(../../../images/Vector\ \(Stroke\).svg) center no-repeat;
+  border: none;
+  min-width: 22px;
+  min-height: 19px;
+  padding: 0;
+}
+
+.element__like:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}

@@ -1,0 +1,19 @@
+.profile__avatar-button {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.profile__avatar-button::before {
+  position: absolute;
+  content: url(../../../images/Vector\ avatar.svg);
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.8s linear;
+  display: none;
+}
