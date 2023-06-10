@@ -150,7 +150,6 @@ function App() {
     api
       .editProfile(user.name, user.about)
       .then((res) => {
-        console.log(res);
         setCurrentUser({
           ...currentUser,
           ...res,
@@ -166,7 +165,6 @@ function App() {
     api
       .editAvatar(link)
       .then((res) => {
-        console.log(res);
         setCurrentUser({
           ...currentUser,
           ...res,
@@ -221,7 +219,6 @@ function App() {
         .then((userInfo) => {
           if (userInfo) {
             setLoggedIn(true);
-            console.log(userInfo);
             setCurrentUser({
               ...currentUser,
               email: userInfo.email,
@@ -230,7 +227,11 @@ function App() {
           }
         })
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setOpenTooltip(true);
+        setTooltipInfo(false);
+        console.log(err)
+      });
   };
 
   return (
