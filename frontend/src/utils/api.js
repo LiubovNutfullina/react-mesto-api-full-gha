@@ -3,6 +3,13 @@ class Api {
     this.options = options;
   }
 
+  updateAuthorizationToken() {
+    this.options.headers = {
+      ...this.options.headers,
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+    }
+  }
+
   getInitialCards() {
     return fetch(this.options.baseUrl + "/cards", {
       headers: this.options.headers,

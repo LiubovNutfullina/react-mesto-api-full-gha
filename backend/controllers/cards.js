@@ -13,7 +13,13 @@ const getCards = (req, res, next) => {
 
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
-  Card.create({ name, link, owner: req.user._id })
+  Card.create({
+    name,
+    link,
+    owner: {
+      _id: req.user._id,
+    },
+  })
     .then((card) => card.populate('owner'))
     .then((card) => res.status(201).send(card))
     .catch((err) => {
@@ -50,7 +56,7 @@ const likeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };
@@ -65,7 +71,7 @@ const dislikeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };

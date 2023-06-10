@@ -40,7 +40,7 @@ function App() {
             setLoggedIn(true);
             setCurrentUser({
               ...currentUser,
-              email: userInfo.data.email,
+              email: userInfo.email,
             });
             navigate("/", { replace: true });
           }
@@ -71,6 +71,10 @@ function App() {
         });
     }
   }, [loggedIn]);
+
+  React.useEffect(()=>{
+    console.log(cards);
+  }, [cards])
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -103,6 +107,7 @@ function App() {
   };
 
   const handleCardLike = (card) => {
+    console.log(card);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     if (isLiked) {
@@ -110,7 +115,7 @@ function App() {
         .deleteLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like}))} : c))
           );
         })
         .catch((err) => {
@@ -121,7 +126,7 @@ function App() {
         .addLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like}))} : c))
           );
         })
         .catch((err) => {
@@ -145,6 +150,7 @@ function App() {
     api
       .editProfile(user.name, user.about)
       .then((res) => {
+        console.log(res);
         setCurrentUser({
           ...currentUser,
           ...res,
@@ -160,6 +166,7 @@ function App() {
     api
       .editAvatar(link)
       .then((res) => {
+        console.log(res);
         setCurrentUser({
           ...currentUser,
           ...res,
@@ -184,9 +191,7 @@ function App() {
   };
 
   const handleLogin = () => {
-    setLoggedIn({
-      loggedIn: true,
-    });
+    setLoggedIn(true);
   };
 
   const handleHeaderButtonClick = () => {
@@ -202,11 +207,28 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-          console.log(data);
+          api.options.headers = {
+            ...api.options.headers,
+            Authorization: `Bearer ${data.token}`,
+          };
           setFormValue({ email: "", password: "" });
-          handleLogin();
-          navigate("/", { replace: true });
         }
+      })
+      .then(()=> {
+        const jwt = localStorage.getItem("jwt");
+        return auth
+        .checkToken(jwt)
+        .then((userInfo) => {
+          if (userInfo) {
+            setLoggedIn(true);
+            console.log(userInfo);
+            setCurrentUser({
+              ...currentUser,
+              email: userInfo.email,
+            });
+            navigate("/", { replace: true });
+          }
+        })
       })
       .catch((err) => console.log(err));
   };

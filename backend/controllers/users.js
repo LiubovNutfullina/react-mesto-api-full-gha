@@ -23,13 +23,12 @@ const createUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then(() => res.status(201).send(
-      {
-        data: {
-          name, about, avatar, email,
-        },
-      },
-    ))
+    .then(() => res.status(201).send({
+      name,
+      about,
+      avatar,
+      email,
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictRequestError('Пользователь с этим e-mail уже существует'));
