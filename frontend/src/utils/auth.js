@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.domainlyubov.students.nomoredomains.rocks";
+const BASE_URL = 'https://api.domainlyubov.students.nomoredomains.rocks';
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {

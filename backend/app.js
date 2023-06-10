@@ -5,18 +5,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const cors = require('cors');
+const { corsProcess } = require('./middlevares/cors');
 const router = require('./routes');
 const errorHandler = require('./middlevares/ErrorHandler');
 const { requestLogger, errorLogger } = require('./middlevares/logger');
-
-const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -26,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors(corsOptions));
+app.use(corsProcess);
 app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
