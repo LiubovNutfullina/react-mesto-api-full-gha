@@ -115,7 +115,7 @@ function App() {
         .deleteLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like}))} : c))
+            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like})), owner: { _id: newCard.owner } } : c))
           );
         })
         .catch((err) => {
@@ -126,7 +126,7 @@ function App() {
         .addLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like}))} : c))
+            state.map((c) => (c._id === card._id ? {...newCard, likes: newCard.likes.map(like => ({_id: like})), owner: { _id: newCard.owner }} : c))
           );
         })
         .catch((err) => {
